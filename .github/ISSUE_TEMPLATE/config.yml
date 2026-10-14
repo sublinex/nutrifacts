@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read contribution and evidence guidance
+    url: https://github.com
+    about: Review CONTRIBUTING.md and DATA-LICENSE.md before proposing a record.

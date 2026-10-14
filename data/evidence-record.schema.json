@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NutriFacts food evidence record",
+  "type": "object",
+  "required": ["schema_version", "food", "findings"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "food": {
+      "type": "object",
+      "required": ["id", "name", "scientific_name", "preparation", "food_part", "source"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "scientific_name": { "type": ["string", "null"] },
+        "preparation": { "type": ["string", "null"] },
+        "food_part": { "type": "string", "minLength": 1 },
+        "source": { "$ref": "#/$defs/source" }
+      },
+      "additionalProperties": false
+    },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["name", "url", "license"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "food_data_central_id": { "type": "integer" },
+        "license": { "type": "string", "minLength": 1 },
+        "citation": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "id", "name", "kind", "category", "unit_label", "formula", "pubchem_cid",
+        "pubchem_3d_conformer_available", "evidence_status", "measurement_status",
+        "curation_status", "reliability_category", "measurement", "method", "sources", "note"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["compound", "protein", "protein_group", "carbohydrate", "food_fraction", "other"] },
+        "category": { "type": "string", "minLength": 1 },
+        "unit_label": { "type": "string", "minLength": 1 },
+        "formula": { "type": ["string", "null"] },
+        "pubchem_cid": { "type": ["integer", "null"] },
+        "pubchem_3d_conformer_available": { "type": "boolean" },
+        "evidence_status": { "enum": ["detected", "predicted", "unknown"] },
+        "measurement_status": { "enum": ["measured", "derived", "not_quantified"] },
+        "curation_status": { "type": "string" },
+        "reliability_category": { "enum": ["direct_measurement", "limited_context", "predicted", "unreviewed", "unknown"] },
+        "measurement": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["reported", "display_per_gram", "sample_count", "conversion"],
+              "properties": {
+                "reported": { "$ref": "#/$defs/quantity" },
+                "display_per_gram": { "$ref": "#/$defs/quantity" },
+                "sample_count": { "type": ["integer", "null"], "minimum": 1 },
+                "conversion": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "method": {
+          "type": "object",
+          "required": ["name", "details", "reference_doi"],
+          "properties": {
+            "name": { "type": "string" },
+            "details": { "type": "string" },
+            "reference_doi": { "type": ["string", "null"] }
+          },
+          "additionalProperties": false
+        },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "quantity": {
+      "type": "object",
+      "required": ["value", "unit", "range"],
+      "properties": {
+        "value": { "type": "number", "minimum": 0 },
+        "unit": { "type": "string", "minLength": 1 },
+        "range": {
+          "type": "object",
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "type": "number", "minimum": 0 },
+            "max": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

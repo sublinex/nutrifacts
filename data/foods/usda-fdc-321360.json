@@ -1,0 +1,144 @@
+{
+  "schema_version": "0.1",
+  "food": {
+    "id": "usda-fdc:321360",
+    "name": "Tomatoes, grape, raw",
+    "scientific_name": "Solanum lycopersicum",
+    "preparation": "raw",
+    "food_part": "whole fruit",
+    "source": {
+      "name": "USDA FoodData Central · Foundation Foods",
+      "url": "https://fdc.nal.usda.gov/food-details/321360/nutrients",
+      "food_data_central_id": 321360,
+      "license": "CC0-1.0"
+    }
+  },
+  "findings": [
+    {
+      "id": "lycopene",
+      "name": "Lycopene",
+      "kind": "compound",
+      "category": "Pigment",
+      "unit_label": "Carotenoid pigment",
+      "formula": "C40H56",
+      "pubchem_cid": 446925,
+      "pubchem_3d_conformer_available": false,
+      "evidence_status": "detected",
+      "measurement_status": "measured",
+      "curation_status": "source-linked · project review pending",
+      "reliability_category": "unreviewed",
+      "measurement": {
+        "reported": {
+          "value": 4100,
+          "unit": "µg/100 g",
+          "range": { "min": 3860, "max": 4240 }
+        },
+        "display_per_gram": {
+          "value": 41,
+          "unit": "µg/g",
+          "range": { "min": 38.6, "max": 42.4 }
+        },
+        "sample_count": 3,
+        "conversion": "reported value and range divided by 100"
+      },
+      "method": {
+        "name": "HPLC",
+        "details": "Analytical; source reports values per 100 g",
+        "reference_doi": "10.1002/0471142913.faf0203s00"
+      },
+      "sources": [
+        {
+          "name": "USDA FoodData Central · Foundation Foods",
+          "url": "https://fdc.nal.usda.gov/food-details/321360/nutrients",
+          "citation": "FoodData Central ID 321360 · Tomatoes, grape, raw · lycopene",
+          "license": "CC0-1.0"
+        }
+      ],
+      "note": "Mean reported value. Range is the minimum–maximum across the reported sample set."
+    },
+    {
+      "id": "vitamin-c",
+      "name": "Vitamin C",
+      "kind": "compound",
+      "category": "Nutrient",
+      "unit_label": "Ascorbic acid",
+      "formula": "C6H8O6",
+      "pubchem_cid": 54670067,
+      "pubchem_3d_conformer_available": true,
+      "evidence_status": "detected",
+      "measurement_status": "measured",
+      "curation_status": "source-linked · project review pending",
+      "reliability_category": "unreviewed",
+      "measurement": {
+        "reported": {
+          "value": 27.2,
+          "unit": "mg/100 g",
+          "range": { "min": 22.4, "max": 32.4 }
+        },
+        "display_per_gram": {
+          "value": 0.272,
+          "unit": "mg/g",
+          "range": { "min": 0.224, "max": 0.324 }
+        },
+        "sample_count": 12,
+        "conversion": "reported value and range divided by 100"
+      },
+      "method": {
+        "name": "HPLC",
+        "details": "Total ascorbic acid; source reports values per 100 g",
+        "reference_doi": "10.1021/jf049398z"
+      },
+      "sources": [
+        {
+          "name": "USDA FoodData Central · Foundation Foods",
+          "url": "https://fdc.nal.usda.gov/food-details/321360/nutrients",
+          "citation": "FoodData Central ID 321360 · Tomatoes, grape, raw · total ascorbic acid",
+          "license": "CC0-1.0"
+        }
+      ],
+      "note": "Mean reported value. Range is the minimum–maximum across the reported sample set."
+    },
+    {
+      "id": "dietary-fiber",
+      "name": "Dietary fiber",
+      "kind": "food_fraction",
+      "category": "Carbohydrate",
+      "unit_label": "Complex carbohydrate fraction",
+      "formula": null,
+      "pubchem_cid": null,
+      "pubchem_3d_conformer_available": false,
+      "evidence_status": "detected",
+      "measurement_status": "measured",
+      "curation_status": "source-linked · project review pending",
+      "reliability_category": "unreviewed",
+      "measurement": {
+        "reported": {
+          "value": 2.1,
+          "unit": "g/100 g",
+          "range": { "min": 1.9, "max": 2.2 }
+        },
+        "display_per_gram": {
+          "value": 0.021,
+          "unit": "g/g",
+          "range": { "min": 0.019, "max": 0.022 }
+        },
+        "sample_count": 3,
+        "conversion": "reported value and range divided by 100"
+      },
+      "method": {
+        "name": "AOAC 991.43",
+        "details": "Enzymatic-gravimetric; source reports values per 100 g",
+        "reference_doi": null
+      },
+      "sources": [
+        {
+          "name": "USDA FoodData Central · Foundation Foods",
+          "url": "https://fdc.nal.usda.gov/food-details/321360/nutrients",
+          "citation": "FoodData Central ID 321360 · Tomatoes, grape, raw · total dietary fiber",
+          "license": "CC0-1.0"
+        }
+      ],
+      "note": "Fiber is a measured food fraction, not a single molecular species."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+name: Evidence contribution
+description: Propose a sourced food compound, protein, or tissue-specific finding
+title: "[Evidence] "
+labels: ["data contribution", "needs review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every proposal is reviewed before it enters the dataset. Keep the original source and its license attached. Do not add amounts unless the source supports the unit and food part.
+  - type: input
+    id: food
+    attributes:
+      label: Food and preparation
+      description: Include species or cultivar/breed and raw/cooked/prepared state when known.
+      placeholder: "e.g. Solanum lycopersicum, grape tomato, raw"
+    validations:
+      required: true
+  - type: input
+    id: part
+    attributes:
+      label: Tissue or plant part
+      description: Use the tissue/part actually studied, or whole food if that is what the source measured.
+      placeholder: "e.g. whole fruit, seed, skeletal muscle"
+    validations:
+      required: true
+  - type: input
+    id: finding
+    attributes:
+      label: Compound or protein
+      placeholder: "Name or identifier"
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Evidence status
+      options:
+        - Detected in an analyzed sample
+        - Predicted or inferred
+        - Unclear; needs researcher review
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source URL or DOI
+      placeholder: "https://… or 10.xxxx/…"
+    validations:
+      required: true
+  - type: input
+    id: amount
+    attributes:
+      label: Amount and unit, if reliably reported
+      description: Include the original basis (for example, per 100 g fresh weight), range, and sample count when available. Leave blank if not supported.
+      placeholder: "e.g. 2.1 g/100 g fresh weight; n=3"
+  - type: input
+    id: method
+    attributes:
+      label: Analytical or prediction method
+      placeholder: "e.g. HPLC, LC-MS/MS, sequence-based prediction"
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Sample context and uncertainty
+      description: Cultivar/breed, location, preparation, storage, detection limit, and caveats help reviewers assess how far the finding applies.
+  - type: dropdown
+    id: license
+    attributes:
+      label: Data reuse terms
+      description: Confirm the proposed data can be contributed under CC BY 4.0, or provide the actual source terms and a link. A publicly viewable source is not automatically reusable.
+      options:
+        - I can share the contributed data under CC BY 4.0
+        - Source has different terms; I have included them for review
+        - I am only suggesting a source, not redistributing its data
+    validations:
+      required: true
+  - type: textarea
+    id: draft
+    attributes:
+      label: Attach the downloaded JSON draft or paste its contents
+      description: Drag the JSON file into the issue after creating it, or paste the draft here.

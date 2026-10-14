@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NutriFacts evidence contribution draft",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "submission_status",
+    "food",
+    "tissue_or_plant_part",
+    "compound",
+    "finding_type",
+    "evidence_status",
+    "amount",
+    "source_locator",
+    "proposed_data_license",
+    "review_note"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "submission_status": { "const": "draft_for_review" },
+    "food": { "type": "string", "minLength": 1 },
+    "tissue_or_plant_part": { "type": "string", "minLength": 1 },
+    "compound": { "type": "string", "minLength": 1 },
+    "finding_type": { "enum": ["compound", "protein", "protein_group", "carbohydrate", "other"] },
+    "evidence_status": { "enum": ["detected", "predicted", "unknown"] },
+    "amount": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["value", "unit", "basis", "sample_count", "reliability_category"],
+          "properties": {
+            "value": { "type": "number", "minimum": 0 },
+            "unit": { "type": "string", "minLength": 1 },
+            "basis": { "type": ["string", "null"] },
+            "sample_count": { "type": ["integer", "null"], "minimum": 1 },
+            "reliability_category": { "const": "unreviewed" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "source_locator": { "type": "string", "minLength": 1 },
+    "method": { "type": ["string", "null"] },
+    "contributor_note": { "type": ["string", "null"] },
+    "proposed_data_license": { "const": "CC BY 4.0" },
+    "review_note": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}
