@@ -6,6 +6,8 @@ An open field guide to the compounds in whole foods. NutriFacts is designed for 
 
 ## Current preview
 
+Try the [live demo](https://sublinex.github.io/nutrifacts/) or run the app locally.
+
 This first UI preview includes one cited USDA Foundation Foods example: raw grape tomatoes (FoodData Central ID 321360). It shows a few reported measurements converted from per 100 g to per gram, expands methods and citations on demand, distinguishes food-level from tissue-level gaps, and provides an interactive 2D/3D molecule panel where a PubChem conformer is available. The 3D viewer uses [3Dmol.js](https://3dmol.org/doc/) to render PubChem's SDF conformer data in the page.
 
 This is a UI foundation, not a complete food composition database. A missing record means evidence has not been added and reviewed here; it does not mean a compound is absent from the food. Tissue/plant-part entries and protein identities are not filled unless a source supports them.
@@ -27,7 +29,7 @@ Create `.env.local` from `.env.example` to configure the optional donation link 
 VITE_DONATION_URL=https://github.com/sponsors/YOUR_ACCOUNT
 ```
 
-Donation configuration is optional; no data or feature depends on it.
+For the hosted preview, the owner can set a repository Actions variable named `VITE_DONATION_URL` to the activated support page. The repository's GitHub Sponsors configuration is in `.github/FUNDING.yml`. Donations are optional; no data or feature depends on them.
 
 ## Where things live
 
