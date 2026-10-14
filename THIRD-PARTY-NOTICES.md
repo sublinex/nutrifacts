@@ -13,3 +13,11 @@ The production app includes the open-source packages below. Their license texts 
 | upng-js | MIT | [`upng-js-MIT.txt`](third-party-licenses/upng-js-MIT.txt) |
 
 This list covers the app's production dependencies. Update it when production dependencies or their licenses change. Food-composition records and their source terms are documented separately in [`DATA-LICENSE.md`](DATA-LICENSE.md).
+
+## Bundled media
+
+| Asset | Creator | License | Source |
+| --- | --- | --- | --- |
+| Grape tomatoes on the vine (`public/images/foods/grape-tomatoes-domdomegg.jpg`) | domdomegg | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [Wikimedia Commons file page](https://commons.wikimedia.org/wiki/File:Grape_tomatoes_on_the_vine_at_Ljubljana_Central_Market.JPG) |
+
+The file page identifies the subject as grape tomatoes on the vine. The bundled file is a 1280-pixel Commons thumbnail; the page displays it with a CSS crop. The cultivar is not identified.

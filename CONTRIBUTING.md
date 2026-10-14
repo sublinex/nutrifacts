@@ -2,9 +2,11 @@
 
 NutriFacts is a free, open project for learners and researchers. Contributions that add evidence, improve its interpretation, or make its gaps clearer are welcome.
 
+The first version uses raw, uncooked reference foods. Describe the raw form precisely: dry uncooked rice or beans, raw meat, fresh produce, and any milling, polishing, shelling, skin, or moisture state. Keep cooked and processed sample results out of raw profiles; log them as excluded leads. They can only be added later as separate records if the project expands its scope.
+
 ## Start with a source
 
-Use the in-app **Prepare a contribution** form to download a JSON proposal, or make a data change directly in a branch. Cite a paper, repository record, or other traceable source. Keep the source URL or DOI, sample identity, food part, evidence status, method, units, and original source terms with the claim.
+Use the in-app **Prepare a contribution** form to download a JSON proposal, or make a data change directly in a branch. Follow the multi-source research workflow in [the whole-food research skill](skills/whole-food-evidence-research/SKILL.md) and record source coverage in its [dossier template](skills/whole-food-evidence-research/research-dossier-template.md). Search every relevant reliable source family; do not treat one database row or paper as comprehensive coverage. Cite each claim and keep the source URL or DOI, sample identity, raw food part, evidence status, method, units, and original source terms with the record.
 
 ## Evidence language
 
@@ -15,6 +17,10 @@ Use the in-app **Prepare a contribution** form to download a JSON proposal, or m
 - **Uncertain / unreviewed:** evidence needs checking or lacks enough context. Do not display an amount as established.
 
 Evidence quality depends on more than a badge. Reviewers consider the source type, analytical method, sample count and variation, cultivar or breed, preparation, storage, tissue resolution, and whether the finding applies to the named food. A single sample or method does not establish a universal food value.
+
+For carbohydrates, distinguish a free or soluble sugar from a sugar residue bound inside a polymer. For example, glucose can be measured as a free sugar or appear as a linked structural unit in cellulose; these are different claims. Sucrose is a disaccharide made of glucose and fructose units, not a generic polymer monomer. Do not assign an amount to a raw food from a cooked sample, a different cultivar, or a different tissue.
+
+Food listings use real photographs of the correct species and food form. Verify the image visually and inspect the source file page for its license before bundling it. Record creator, source file page, license and link, taxon match, what the image depicts, alt text, modifications, and a visible credit. Do not use AI-generated specimen images.
 
 ## Research reliability categories
 

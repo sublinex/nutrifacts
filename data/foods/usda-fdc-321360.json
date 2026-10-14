@@ -1,17 +1,236 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "food": {
     "id": "usda-fdc:321360",
     "name": "Tomatoes, grape, raw",
     "scientific_name": "Solanum lycopersicum",
     "preparation": "raw",
     "food_part": "whole fruit",
+    "image": {
+      "path": "/images/foods/grape-tomatoes-domdomegg.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Grape_tomatoes_on_the_vine_at_Ljubljana_Central_Market.JPG",
+      "source_file_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Grape_tomatoes_on_the_vine_at_Ljubljana_Central_Market.JPG/1280px-Grape_tomatoes_on_the_vine_at_Ljubljana_Central_Market.JPG",
+      "creator": "domdomegg",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "alt": "Ripe red grape tomatoes growing on the vine",
+      "depicts": "Grape tomatoes on the vine",
+      "taxon_name": "Solanum lycopersicum",
+      "food_match": "Grape tomato fruit; cultivar not specified",
+      "identity_scope": "Food form and species match; the depicted cultivar is not identified.",
+      "modification": "Downloaded the 1280-pixel Wikimedia Commons thumbnail; displayed with a CSS crop."
+    },
     "source": {
       "name": "USDA FoodData Central · Foundation Foods",
       "url": "https://fdc.nal.usda.gov/food-details/321360/nutrients",
       "food_data_central_id": 321360,
       "license": "CC0-1.0"
     }
+  },
+  "carbohydrate_map": {
+    "note": "These literature records describe tomato fruit or fruit cell walls, but not the specific USDA grape-tomato sample. No compatible amounts are shown. Cultivar, ripeness, and tissue can change the sugar profile. A building block shown below is a chemically bound residue within a polymer unless explicitly labeled as a free sugar.",
+    "sources": [
+      {
+        "id": "tomato-sugar-study",
+        "name": "Systematic analysis of the sugar accumulation mechanism in sucrose- and hexose-accumulating cherry tomato fruits",
+        "url": "https://link.springer.com/article/10.1186/s12870-022-03685-8",
+        "citation": "Sun et al. (2022), BMC Plant Biology 22:303. Two Solanum lycopersicum var. cerasiforme lines; sugars analyzed across fruit stages and whole fruit, exocarp, mesocarp, endocarp, placenta, and septum.",
+        "license": "CC BY 4.0"
+      },
+      {
+        "id": "tomato-pericarp-study",
+        "name": "Remodeling of pectin and hemicelluloses in tomato pericarp during fruit growth",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/28224918/",
+        "citation": "Guillon et al. (2017), Plant Science 257:48–62. Cell-wall composition and polysaccharide structure in Solanum lycopersicum var. Levovil pericarp across developmental stages.",
+        "license": "Citation and linked abstract; publisher terms apply to full text."
+      },
+      {
+        "id": "tomato-cell-wall-study",
+        "name": "The Structure and Composition of Extracted Pectin and Residual Cell Wall Material from Processing Tomato",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8150267/",
+        "citation": "Van Audenhove et al. (2021), Foods 10(5):1064. Pectin and residual cell-wall material from processing tomato; structural context and extraction-based characterization.",
+        "license": "CC BY 4.0"
+      }
+    ],
+    "records": [
+      {
+        "id": "glucose",
+        "name": "Glucose",
+        "group": "Soluble sugars",
+        "class": "Monosaccharide · free sugar",
+        "part": "Tomato fruit: whole fruit and fruit tissues were analyzed in the cited cherry-tomato study.",
+        "evidence_status": "detected",
+        "reliability_category": "limited_context",
+        "amount": null,
+        "relationship": "Measured as a soluble sugar in two cherry-tomato lines. It is also a structural repeat unit in cellulose and the backbone of xyloglucan; those bound residues are not free glucose.",
+        "building_blocks": [],
+        "sample_context": "Two experimental cherry-tomato lines, TB0023 and TB0278, sampled at multiple ripening stages; not the USDA grape-tomato sample.",
+        "source_ids": ["tomato-sugar-study", "tomato-cell-wall-study"]
+      },
+      {
+        "id": "fructose",
+        "name": "Fructose",
+        "group": "Soluble sugars",
+        "class": "Monosaccharide · free sugar",
+        "part": "Tomato fruit: whole fruit and fruit tissues were analyzed in the cited cherry-tomato study.",
+        "evidence_status": "detected",
+        "reliability_category": "limited_context",
+        "amount": null,
+        "relationship": "Measured as a soluble sugar in two cherry-tomato lines. Its abundance differed with the line and developmental stage.",
+        "building_blocks": [],
+        "sample_context": "Two experimental cherry-tomato lines, TB0023 and TB0278, sampled at multiple ripening stages; not the USDA grape-tomato sample.",
+        "source_ids": ["tomato-sugar-study"]
+      },
+      {
+        "id": "sucrose",
+        "name": "Sucrose",
+        "group": "Soluble sugars",
+        "class": "Disaccharide · free sugar",
+        "part": "Tomato fruit: whole fruit and fruit tissues were analyzed in the cited cherry-tomato study.",
+        "evidence_status": "detected",
+        "reliability_category": "limited_context",
+        "amount": null,
+        "relationship": "A disaccharide made of one glucose unit and one fructose unit. The study found a strong cultivar difference: sucrose accumulated in TB0023 and was very low in the hexose-accumulating TB0278 line.",
+        "building_blocks": [
+          { "name": "Glucose", "role": "one constituent unit" },
+          { "name": "Fructose", "role": "one constituent unit" }
+        ],
+        "sample_context": "Two experimental cherry-tomato lines, TB0023 and TB0278, sampled at multiple ripening stages; not the USDA grape-tomato sample.",
+        "source_ids": ["tomato-sugar-study"]
+      },
+      {
+        "id": "pectin",
+        "name": "Pectin",
+        "group": "Cell-wall polysaccharides",
+        "class": "Heterogeneous structural polysaccharide",
+        "part": "Fruit cell wall, including tomato pericarp; cell-wall structures were studied in processing tomato and Levovil pericarp.",
+        "evidence_status": "detected",
+        "reliability_category": "limited_context",
+        "amount": null,
+        "relationship": "Pectin is a family of polymers, not one molecule. Homogalacturonan (HG) has α-(1→4)-linked galacturonic-acid residues. Rhamnogalacturonan I (RG-I) has a rhamnose–galacturonic-acid backbone with galactose- and arabinose-rich side chains.",
+        "building_blocks": [
+          { "name": "Galacturonic acid (GalA)", "role": "α-(1→4)-linked repeat in homogalacturonan; also part of the RG-I backbone" },
+          { "name": "Rhamnose (Rha)", "role": "alternates with GalA in the RG-I backbone" },
+          { "name": "Galactose", "role": "common residue in RG-I side chains; not asserted here as free galactose" },
+          { "name": "Arabinose", "role": "common residue in RG-I side chains; not asserted here as free arabinose" }
+        ],
+        "sample_context": "Tomato cell-wall studies used processing-tomato material and the Levovil cultivar at specified fruit-development stages; they do not quantify pectin in this USDA sample.",
+        "source_ids": ["tomato-pericarp-study", "tomato-cell-wall-study"]
+      },
+      {
+        "id": "cellulose",
+        "name": "Cellulose",
+        "group": "Cell-wall polysaccharides",
+        "class": "Structural polysaccharide",
+        "part": "Tomato fruit cell wall; characterized in processing-tomato cell-wall material.",
+        "evidence_status": "detected",
+        "reliability_category": "limited_context",
+        "amount": null,
+        "relationship": "Long, linear glucan chains joined by β-(1→4) bonds. A glucose unit in cellulose is a bound residue, not free glucose.",
+        "building_blocks": [
+          { "name": "β-D-glucose", "role": "repeating residue joined by β-(1→4) bonds" }
+        ],
+        "sample_context": "Cellulose was estimated in extraction fractions from processing-tomato cell walls; no amount is available for this USDA grape-tomato sample.",
+        "source_ids": ["tomato-cell-wall-study"]
+      },
+      {
+        "id": "xyloglucan",
+        "name": "Xyloglucan",
+        "group": "Cell-wall polysaccharides",
+        "class": "Hemicellulose · structural polysaccharide",
+        "part": "Tomato fruit pericarp cell wall.",
+        "evidence_status": "detected",
+        "reliability_category": "limited_context",
+        "amount": null,
+        "relationship": "A β-(1→4)-glucose backbone with xylose residues attached. Tomato pericarp studies report xyloglucan remodeling during fruit development.",
+        "building_blocks": [
+          { "name": "β-D-glucose", "role": "repeating backbone residue joined by β-(1→4) bonds" },
+          { "name": "Xylose", "role": "side-chain residue attached to the backbone" }
+        ],
+        "sample_context": "Pericarp evidence comes from the Levovil tomato at defined developmental stages; structural detail is paired with a processing-tomato cell-wall study.",
+        "source_ids": ["tomato-pericarp-study", "tomato-cell-wall-study"]
+      }
+    ]
+  },
+  "part_context": {
+    "note": "These are research leads for tomato parts, not accepted measurements for the USDA grape-tomato sample. Expand a source before contributing a tissue-specific claim.",
+    "parts": [
+      {
+        "id": "flesh",
+        "label": "Flesh",
+        "anatomical_terms": ["mesocarp", "endocarp", "pericarp"],
+        "summary": "Tomato fruit studies have analyzed soluble sugars in the mesocarp and endocarp, and developmental metabolomics studies have profiled mesocarp separately. Pericarp cell-wall work provides context for pectin and hemicellulose.",
+        "sample_context": "The sugar study used two cherry-tomato lines at multiple ripening stages. Other studies used named research cultivars and developmental samples, not this USDA grape-tomato lot.",
+        "sources": [
+          {
+            "name": "Systematic analysis of the sugar accumulation mechanism in sucrose- and hexose-accumulating cherry tomato fruits",
+            "url": "https://link.springer.com/article/10.1186/s12870-022-03685-8",
+            "citation": "Sun et al. (2022), BMC Plant Biology 22:303; sugar levels measured in whole fruit and multiple tissues, including mesocarp and endocarp.",
+            "license": "CC BY 4.0"
+          },
+          {
+            "name": "NMR-Based Tissular and Developmental Metabolomics of Tomato Fruit",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6571556/",
+            "citation": "Tomato tissues including exocarp, mesocarp, columella/placenta, locular tissue, and seeds analyzed at four developmental stages.",
+            "license": "Open-access article; see article terms."
+          },
+          {
+            "name": "Remodeling of pectin and hemicelluloses in tomato pericarp during fruit growth",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/28224918/",
+            "citation": "Guillon et al. (2017), Plant Science 257:48–62; cell-wall structure studied in Levovil pericarp during fruit development.",
+            "license": "Citation and linked abstract; publisher terms apply to full text."
+          }
+        ]
+      },
+      {
+        "id": "skin",
+        "label": "Skin",
+        "anatomical_terms": ["exocarp", "peel"],
+        "summary": "Studies have compared tomato peel/exocarp with flesh and measured soluble sugars by fruit tissue. Metabolomics features need compound-level identification review before they become accepted names in this profile.",
+        "sample_context": "The sources use multiple tomato cultivars or experimental lines; peel results are not whole-fruit amounts and do not identify the cultivar in the USDA grape-tomato sample.",
+        "sources": [
+          {
+            "name": "Systematic analysis of the sugar accumulation mechanism in sucrose- and hexose-accumulating cherry tomato fruits",
+            "url": "https://link.springer.com/article/10.1186/s12870-022-03685-8",
+            "citation": "Sun et al. (2022), BMC Plant Biology 22:303; sugar levels measured in exocarp and other fruit tissues.",
+            "license": "CC BY 4.0"
+          },
+          {
+            "name": "A Liquid Chromatography-Mass Spectrometry-Based Metabolome Database for Tomato",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1533921/",
+            "citation": "Moco et al. (2006); LC-QTOF/PDA tomato fruit database and peel/flesh comparison across a pool of 96 cultivars and several fruit types.",
+            "license": "Open-access article; see article terms."
+          },
+          {
+            "name": "NMR-Based Tissular and Developmental Metabolomics of Tomato Fruit",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6571556/",
+            "citation": "Developmental profiles include separately dissected exocarp and other tomato fruit tissues.",
+            "license": "Open-access article; see article terms."
+          }
+        ]
+      },
+      {
+        "id": "seeds",
+        "label": "Seeds",
+        "anatomical_terms": ["seed"],
+        "summary": "Tomato studies have profiled seeds separately from flesh. Dry, developing, and imbibed seed samples are distinct states; their results should not be treated as measurements of fresh seeds inside this raw grape tomato.",
+        "sample_context": "Available studies use developmental-stage samples or mapping populations and require state, genotype, and tissue checks before any claim is transferred.",
+        "sources": [
+          {
+            "name": "NMR-Based Tissular and Developmental Metabolomics of Tomato Fruit",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6571556/",
+            "citation": "Tomato seeds separated from fruit tissues and profiled at four developmental stages.",
+            "license": "Open-access article; see article terms."
+          },
+          {
+            "name": "Metabolomic analysis of tomato seed germination",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5653705/",
+            "citation": "GC-TOF/MS profiles of dry mature and 6-hour imbibed seeds from a Moneymaker × S. pimpinellifolium mapping population.",
+            "license": "Open-access article; see article terms."
+          }
+        ]
+      }
+    ]
   },
   "findings": [
     {

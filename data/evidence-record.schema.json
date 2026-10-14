@@ -7,13 +7,14 @@
     "schema_version": { "type": "string" },
     "food": {
       "type": "object",
-      "required": ["id", "name", "scientific_name", "preparation", "food_part", "source"],
+      "required": ["id", "name", "scientific_name", "preparation", "food_part", "image", "source"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
         "name": { "type": "string", "minLength": 1 },
         "scientific_name": { "type": ["string", "null"] },
         "preparation": { "type": ["string", "null"] },
         "food_part": { "type": "string", "minLength": 1 },
+        "image": { "$ref": "#/$defs/foodImage" },
         "source": { "$ref": "#/$defs/source" }
       },
       "additionalProperties": false
@@ -21,9 +22,121 @@
     "findings": {
       "type": "array",
       "items": { "$ref": "#/$defs/finding" }
-    }
+    },
+    "carbohydrate_map": { "$ref": "#/$defs/carbohydrateMap" },
+    "part_context": { "$ref": "#/$defs/partContext" }
   },
   "$defs": {
+    "foodImage": {
+      "type": "object",
+      "required": ["path", "source_url", "source_file_url", "creator", "license", "license_url", "alt", "depicts", "taxon_name", "food_match", "identity_scope", "modification"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "format": "uri" },
+        "source_file_url": { "type": "string", "format": "uri" },
+        "creator": { "type": "string", "minLength": 1 },
+        "license": { "type": "string", "minLength": 1 },
+        "license_url": { "type": "string", "format": "uri" },
+        "alt": { "type": "string", "minLength": 1 },
+        "depicts": { "type": "string", "minLength": 1 },
+        "taxon_name": { "type": "string", "minLength": 1 },
+        "food_match": { "type": "string", "minLength": 1 },
+        "identity_scope": { "type": "string", "minLength": 1 },
+        "modification": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "carbohydrateMap": {
+      "type": "object",
+      "required": ["note", "sources", "records"],
+      "properties": {
+        "note": { "type": "string", "minLength": 1 },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/contextSource" }
+        },
+        "records": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/carbohydrateRecord" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "partContext": {
+      "type": "object",
+      "required": ["note", "parts"],
+      "properties": {
+        "note": { "type": "string", "minLength": 1 },
+        "parts": { "type": "array", "items": { "$ref": "#/$defs/partContextRecord" } }
+      },
+      "additionalProperties": false
+    },
+    "partContextRecord": {
+      "type": "object",
+      "required": ["id", "label", "anatomical_terms", "summary", "sample_context", "sources"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "anatomical_terms": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "summary": { "type": "string", "minLength": 1 },
+        "sample_context": { "type": "string", "minLength": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/partSource" } }
+      },
+      "additionalProperties": false
+    },
+    "partSource": {
+      "type": "object",
+      "required": ["name", "url", "citation", "license"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "citation": { "type": "string", "minLength": 1 },
+        "license": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "contextSource": {
+      "type": "object",
+      "required": ["id", "name", "url", "citation", "license"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "citation": { "type": "string", "minLength": 1 },
+        "license": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "carbohydrateRecord": {
+      "type": "object",
+      "required": ["id", "name", "group", "class", "part", "evidence_status", "reliability_category", "amount", "relationship", "building_blocks", "sample_context", "source_ids"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "group": { "enum": ["Soluble sugars", "Cell-wall polysaccharides"] },
+        "class": { "type": "string", "minLength": 1 },
+        "part": { "type": "string", "minLength": 1 },
+        "evidence_status": { "enum": ["detected", "predicted", "unknown"] },
+        "reliability_category": { "enum": ["direct_measurement", "limited_context", "predicted", "unreviewed", "unknown"] },
+        "amount": { "type": ["number", "null"], "minimum": 0 },
+        "relationship": { "type": "string", "minLength": 1 },
+        "building_blocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "role"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "role": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "sample_context": { "type": "string", "minLength": 1 },
+        "source_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      },
+      "additionalProperties": false
+    },
     "source": {
       "type": "object",
       "required": ["name", "url", "license"],

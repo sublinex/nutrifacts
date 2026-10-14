@@ -1,4 +1,4 @@
-.app-shell { min-height: 100vh; overflow: hidden; }
+.app-shell { min-height: 100vh; overflow: clip; }
 .announcement { min-height: 32px; padding: 6px 22px; display: flex; justify-content: center; align-items: center; gap: 9px; background: var(--ink); color: #e6e8cf; font: 10px/1.2 var(--mono); letter-spacing: .025em; }
 .announcement-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
 .announcement-divider { color: #778071; }
@@ -40,7 +40,7 @@ main { max-width: 1380px; margin: 0 auto; padding: 0 48px; }
 .search-result { width: 100%; min-height: 66px; padding: 8px 13px; display: flex; align-items: center; gap: 11px; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
 .search-result:hover { background: #f0f0e5; }
 .result-thumb { width: 39px; height: 43px; overflow: hidden; background: #eeeadd; }
-.result-thumb .tomato-specimen { width: 60px; height: 53px; transform: translate(-10px, -2px); }
+.result-thumb img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .search-result > span:nth-child(2) { flex: 1; display: grid; gap: 2px; }
 .search-result strong { font-size: 12px; }
 .search-result small { color: var(--muted); font-size: 10px; }
@@ -50,20 +50,17 @@ main { max-width: 1380px; margin: 0 auto; padding: 0 48px; }
 .search-empty button { margin: 5px 0 0; padding: 0; display: inline-flex; align-items: center; gap: 5px; border: 0; background: none; color: var(--tomato-dark); font-size: 11px; cursor: pointer; }
 .intro-footnote { margin-top: 16px; display: flex; align-items: center; gap: 7px; color: #727a6e; font-size: 10px; }
 .intro-footnote svg { color: var(--moss); }
-.intro-art { position: relative; height: 386px; margin: 26px 0 23px 18px; overflow: hidden; border: 1px solid #e2dfd3; background: #ecebe0; }
-.intro-art::before { position: absolute; inset: 17px; content: ''; border: 1px solid #dcdccd; }
-.intro-art::after { position: absolute; inset: 0; content: ''; opacity: .17; pointer-events: none; background-image: radial-gradient(#7f876d 0.5px, transparent .5px); background-size: 8px 8px; mask-image: linear-gradient(90deg, transparent 15%, #000 70%); }
-.art-index { position: absolute; z-index: 1; top: 31px; left: 33px; display: flex; gap: 7px; color: #626c5f; font: 9px var(--mono); letter-spacing: .06em; }
+.intro-art { position: relative; height: 386px; margin: 26px 0 23px 18px; overflow: hidden; border: 1px solid #e2dfd3; background: #ecebe0; isolation: isolate; }
+.intro-art::before { position: absolute; z-index: 2; inset: 17px; content: ''; border: 1px solid #ffffff91; pointer-events: none; }
+.intro-art::after { position: absolute; z-index: 1; inset: 0; content: ''; pointer-events: none; background: linear-gradient(180deg, #1b271300 50%, #1b271373 76%, #1b2713ba 100%); }
+.art-index { position: absolute; z-index: 3; top: 31px; left: 33px; display: flex; gap: 7px; padding: 7px 9px; border-radius: 2px; color: #fff; background: #1b2713bd; font: 9px var(--mono); letter-spacing: .06em; }
 .art-index span { color: var(--tomato); }
-.tomato-specimen { width: min(92%, 360px); height: auto; overflow: visible; }
-.intro-art > .tomato-specimen { position: absolute; z-index: 1; width: min(93%, 390px); top: 47%; left: 50%; transform: translate(-50%, -50%); }
-.orbit { fill: none; stroke: #819078; stroke-width: 1; stroke-dasharray: 3 5; opacity: .45; }
-.orbit-two { stroke: #c8a298; stroke-dasharray: 1 5; }
-.atom circle:first-child { fill: #cf503a; }
-.atom circle:last-child { fill: none; stroke: #879277; stroke-width: 1; opacity: .62; }
-.specimen-label { fill: #65715e; font: 8px var(--mono); letter-spacing: 1.3px; }
-.art-caption { position: absolute; z-index: 2; left: 32px; right: 32px; bottom: 30px; display: flex; justify-content: space-between; color: #687263; font: 8px var(--mono); letter-spacing: .05em; }
-.art-caption span:first-child { color: var(--tomato); }
+.food-photo { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.art-caption { position: absolute; z-index: 3; left: 28px; right: 28px; bottom: 27px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding: 12px 13px 10px; color: #fff; background: #1b2713b8; backdrop-filter: blur(5px); font: 8px var(--mono); letter-spacing: .04em; }
+.art-caption > span:first-child { color: #ffd1bf; }
+.art-caption > span:nth-child(2) { text-align: center; }
+.image-credit { flex-basis: 100%; display: flex; justify-content: flex-end; gap: 5px; color: #e7e9dc; font-size: 7px; }
+.image-credit a { color: #fff; text-decoration-color: #ffffff80; text-underline-offset: 2px; }
 
 .food-workspace { padding: 43px 0 20px; }
 .food-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
@@ -137,24 +134,71 @@ main { max-width: 1380px; margin: 0 auto; padding: 0 48px; }
 .no-data-row > div:nth-child(2) { flex: 1; }
 .no-data-row strong { font-size: 10px; }
 .no-data-row p { margin: 4px 0 0; color: #878e82; font-size: 9px; line-height: 1.45; }
+.no-data-source { margin-top: 7px; display: inline-flex; align-items: center; gap: 4px; color: #65715e; font-size: 8px; text-decoration: none; }
+.no-data-source:hover { color: var(--tomato-dark); text-decoration: underline; }
 .text-action { padding: 5px 0; display: inline-flex; align-items: center; gap: 4px; border: 0; color: var(--tomato-dark); background: none; font-size: 9px; white-space: nowrap; cursor: pointer; }
 .not-listed-note { min-height: 39px; margin-top: 9px; padding: 8px 9px; display: flex; align-items: center; gap: 8px; color: #787f73; background: #f2f2e9; font-size: 8px; }
 .not-listed-note > svg { flex: none; color: #879269; }
 .not-listed-note strong { color: #55634e; font-weight: 700; }
 .not-listed-note button { margin-left: auto; padding: 2px 0 2px 8px; display: inline-flex; align-items: center; gap: 3px; border: 0; color: var(--tomato-dark); background: transparent; font-size: 8px; white-space: nowrap; cursor: pointer; }
-.tissue-gap { min-height: 329px; padding: 30px 11px 24px 9px; display: grid; grid-template-columns: 64px 1fr; align-content: center; gap: 16px; }
-.gap-stamp { width: 60px; height: 60px; display: grid; align-content: center; justify-items: center; gap: 3px; border: 1px dashed #a5ad92; border-radius: 50%; color: #758263; transform: rotate(-7deg); }
-.gap-stamp span { font: 7px/1.3 var(--mono); text-align: center; }
-.gap-stamp svg { color: var(--tomato); }
+.carbohydrate-map { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.carb-map-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; }
+.carb-map-heading h3 { margin: 5px 0 0; color: var(--ink); font-size: 17px; letter-spacing: -.035em; }
+.carb-map-tag { padding: 5px 7px; border: 1px solid #d7d8c8; color: #707867; font: 7px var(--mono); letter-spacing: .045em; }
+.carb-map-note { max-width: 760px; margin: 9px 0 18px; color: #7a8074; font-size: 9px; line-height: 1.65; }
+.carb-group + .carb-group { margin-top: 19px; }
+.carb-group > h4 { margin: 0 0 9px; color: #66715e; font: 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.carb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.carb-card { min-width: 0; padding: 13px; border: 1px solid #e6e4d9; background: #fffefa; }
+.carb-card-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+.carb-class { color: #7a806f; font: 7px var(--mono); letter-spacing: .04em; text-transform: uppercase; }
+.carb-status { color: #757b6f; font: 7px var(--mono); }
+.carb-card h5 { margin: 10px 0 6px; color: var(--ink); font-size: 14px; font-weight: 600; }
+.carb-part { margin: 0 0 8px; display: flex; align-items: flex-start; gap: 5px; color: #7a8074; font-size: 8px; line-height: 1.55; }
+.carb-part svg { flex: none; margin-top: 1px; color: var(--moss); }
+.carb-relationship { margin: 0; color: #424a3e; font-size: 9px; line-height: 1.6; }
+.building-blocks { margin-top: 11px; padding-top: 9px; border-top: 1px solid #eeede4; }
+.building-blocks > span { color: #858a7d; font: 7px var(--mono); letter-spacing: .055em; }
+.building-blocks ul { margin: 7px 0 0; padding: 0; display: grid; gap: 5px; list-style: none; }
+.building-blocks li { display: grid; grid-template-columns: minmax(90px, .8fr) 1.2fr; gap: 8px; align-items: baseline; }
+.building-blocks li strong { color: #59634f; font-size: 8px; font-weight: 600; }
+.building-blocks li small { color: #858a7d; font-size: 7px; line-height: 1.45; }
+.carb-amount-note { margin-top: 10px; padding: 6px 7px; color: #777e70; background: #f4f3eb; font-size: 7px; line-height: 1.45; }
+.carb-source-details { margin-top: 8px; border-top: 1px solid #eeede4; }
+.carb-source-details summary { padding: 9px 0 1px; color: #67705f; font-size: 8px; cursor: pointer; }
+.carb-source-details summary:hover { color: var(--tomato-dark); }
+.carb-source-details > p { margin: 8px 0; color: #73796f; font-size: 8px; line-height: 1.55; }
+.carb-source-details > p strong { color: #505a49; }
+.carb-source { margin-top: 9px; padding-top: 8px; border-top: 1px solid #eeede4; }
+.carb-source > a { display: inline-flex; align-items: center; gap: 4px; color: #55634e; font-size: 8px; line-height: 1.5; text-decoration: none; }
+.carb-source > a:hover { color: var(--tomato-dark); text-decoration: underline; }
+.carb-source > p { margin: 4px 0; color: #858a7d; font-size: 7px; line-height: 1.55; }
+.carb-source > span { color: #999d92; font: 6px var(--mono); }
+.carb-map-footnote { margin: 12px 0 0; color: #82877c; font-size: 8px; line-height: 1.6; }
+.tissue-context { min-height: 329px; padding: 30px 11px 24px 9px; display: grid; grid-template-columns: 64px 1fr; align-content: center; gap: 16px; }
+.part-context-stamp { width: 60px; height: 60px; display: grid; align-content: center; justify-items: center; gap: 3px; border: 1px dashed #a5ad92; border-radius: 50%; color: #758263; transform: rotate(-7deg); }
+.part-context-stamp span { font: 7px/1.3 var(--mono); text-align: center; }
+.part-context-stamp svg { color: var(--tomato); }
 .gap-eyebrow { display: flex; align-items: center; gap: 6px; color: #987c62; font: 8px var(--mono); letter-spacing: .06em; }
 .gap-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: #c28f65; }
-.gap-copy h3 { margin: 11px 0 7px; font-size: 16px; letter-spacing: -.035em; }
-.gap-copy > p { max-width: 430px; margin: 0 0 15px; color: #7f867b; font-size: 10px; line-height: 1.6; }
+.part-context-copy h3 { margin: 11px 0 7px; font-size: 16px; letter-spacing: -.035em; }
+.part-context-copy > p { max-width: 520px; margin: 0 0 10px; color: #7f867b; font-size: 9px; line-height: 1.6; }
+.part-context-copy .part-context-sample strong { color: #5d6853; }
+.part-source-details { max-width: 560px; margin: 9px 0 13px; border-top: 1px solid #e6e6dc; border-bottom: 1px solid #e6e6dc; }
+.part-source-details summary { padding: 9px 0; color: #626f59; font-size: 9px; cursor: pointer; }
+.part-source-details summary:hover { color: var(--tomato-dark); }
+.part-source { padding: 8px 0; border-top: 1px solid #eeede5; }
+.part-source a { display: inline-flex; align-items: center; gap: 4px; color: #59664f; font-size: 8px; text-decoration: none; }
+.part-source a:hover { text-decoration: underline; }
+.part-source p { margin: 4px 0; color: #81877b; font-size: 8px; line-height: 1.5; }
+.part-source small { color: #9a9e94; font: 6px var(--mono); }
+.part-dossier-link { margin: 9px 0 0 10px; display: inline-flex; align-items: center; gap: 4px; color: #69745f; font-size: 8px; text-decoration: none; }
+.part-dossier-link:hover { color: var(--tomato-dark); }
 .primary-action { padding: 10px 12px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 0; border-radius: 3px; color: #fffefa; background: var(--tomato); font-size: 10px; cursor: pointer; transition: background .18s, transform .18s; }
 .primary-action:hover { background: var(--tomato-dark); transform: translateY(-1px); }
 .draft-note { display: block; margin-top: 8px; color: #989c91; font-size: 8px; }
 
-.molecule-panel { min-width: 0; padding: 19px 20px 17px; background: #f8f7f0; }
+.molecule-panel { position: sticky; top: 16px; align-self: start; min-width: 0; padding: 19px 20px 17px; background: #f8f7f0; }
 .molecule-panel-head { display: flex; align-items: center; justify-content: space-between; }
 .molecule-panel-head > div { display: grid; gap: 5px; }
 .molecule-panel-head > div > strong { color: var(--ink); font-size: 12px; }
@@ -289,7 +333,7 @@ main { max-width: 1380px; margin: 0 auto; padding: 0 48px; }
   .art-caption { left: 25px; right: 25px; bottom: 25px; }
   .workspace-grid { grid-template-columns: 1fr; }
   .evidence-panel { border-right: 0; }
-  .molecule-panel { display: grid; grid-template-columns: minmax(130px, .66fr) 1.2fr; grid-template-rows: auto 1fr auto; column-gap: 16px; border-top: 1px solid var(--line); }
+  .molecule-panel { position: static; display: grid; grid-template-columns: minmax(130px, .66fr) 1.2fr; grid-template-rows: auto 1fr auto; column-gap: 16px; border-top: 1px solid var(--line); }
   .molecule-panel-head { grid-column: 1 / -1; }
   .molecule-canvas { grid-row: 2 / 4; height: 176px; margin-top: 10px; }
   .molecule-canvas.canvas-3d { height: 300px; }
@@ -329,9 +373,9 @@ main { max-width: 1380px; margin: 0 auto; padding: 0 48px; }
   .intro-footnote { margin-top: 12px; font-size: 9px; }
   .intro-art { height: 270px; margin: 4px 0 18px; }
   .intro-art::before { inset: 12px; }
-  .intro-art > .tomato-specimen { width: 290px; }
   .art-index { top: 22px; left: 23px; font-size: 8px; }
-  .art-caption { left: 22px; right: 22px; bottom: 22px; font-size: 7px; }
+  .art-caption { left: 22px; right: 22px; bottom: 22px; gap: 5px 8px; padding: 9px 9px 8px; font-size: 7px; }
+  .image-credit { font-size: 6px; }
   .food-workspace { padding-top: 28px; }
   .no-food-profile { min-height: 260px; margin: 30px 0; padding: 27px 12px; grid-template-columns: 39px 1fr; gap: 11px; }
   .no-food-profile .empty-orbit { width: 37px; height: 37px; }
@@ -368,14 +412,25 @@ main { max-width: 1380px; margin: 0 auto; padding: 0 48px; }
   .not-listed-note { align-items: start; gap: 6px; font-size: 7px; line-height: 1.45; }
   .not-listed-note button { align-self: center; font-size: 0; }
   .not-listed-note button svg { width: 15px; height: 15px; }
+  .carbohydrate-map { margin-top: 18px; padding-top: 16px; }
+  .carb-map-heading h3 { font-size: 15px; }
+  .carb-map-tag { max-width: 108px; text-align: center; font-size: 6px; line-height: 1.4; }
+  .carb-map-note { margin: 8px 0 14px; font-size: 8px; }
+  .carb-grid { grid-template-columns: 1fr; }
+  .carb-card { padding: 11px; }
+  .carb-relationship { font-size: 8px; }
+  .carb-part { font-size: 7px; }
+  .building-blocks li { grid-template-columns: minmax(84px, .8fr) 1.2fr; }
+  .carb-map-footnote { font-size: 7px; }
   .no-data-row { flex-wrap: wrap; gap: 8px; }
   .no-data-row > div:nth-child(2) { min-width: 180px; }
-  .tissue-gap { min-height: 300px; grid-template-columns: 43px 1fr; gap: 11px; padding: 25px 2px; }
-  .gap-stamp { width: 42px; height: 42px; }
-  .gap-stamp span { font-size: 6px; }
-  .gap-stamp svg { width: 12px; }
-  .gap-copy h3 { margin-top: 9px; font-size: 14px; }
-  .gap-copy > p { font-size: 9px; }
+  .tissue-context { min-height: 300px; grid-template-columns: 43px 1fr; gap: 11px; padding: 25px 2px; }
+  .part-context-stamp { width: 42px; height: 42px; }
+  .part-context-stamp span { font-size: 6px; }
+  .part-context-stamp svg { width: 12px; }
+  .part-context-copy h3 { margin-top: 9px; font-size: 14px; }
+  .part-context-copy > p { font-size: 8px; }
+  .part-dossier-link { margin-left: 0; }
   .primary-action { padding: 9px 10px; font-size: 9px; }
   .molecule-panel { padding: 13px 11px 11px; display: flex; flex-direction: column; }
   .molecule-canvas { height: 190px; }

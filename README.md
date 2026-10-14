@@ -8,9 +8,9 @@ An open field guide to the compounds in whole foods. NutriFacts is designed for 
 
 Try the [live demo](https://sublinex.github.io/nutrifacts/) or run the app locally.
 
-This first UI preview includes one cited USDA Foundation Foods example: raw grape tomatoes (FoodData Central ID 321360). It shows a few reported measurements converted from per 100 g to per gram, expands methods and citations on demand, distinguishes food-level from tissue-level gaps, and provides an interactive 2D/3D molecule panel where a PubChem conformer is available. The 3D viewer uses [3Dmol.js](https://3dmol.org/doc/) to render PubChem's SDF conformer data in the page.
+This first UI preview includes one USDA Foundation Foods example: raw grape tomatoes (FoodData Central ID 321360). It shows reported measurements converted from per 100 g to per gram, expands methods and citations on demand, distinguishes food-level from tissue-level gaps, and provides an interactive 2D/3D molecule panel where a PubChem conformer is available. The carbohydrate map gives examples of free sugars and sugar units in tomato cell-wall polymers, with amounts left blank when studies do not match this USDA grape-tomato sample. The food photo is a real grape-tomato photograph, with its source and CC BY 4.0 credit visible beside it. The 3D viewer uses [3Dmol.js](https://3dmol.org/doc/) to render PubChem's SDF conformer data in the page.
 
-This is a UI foundation, not a complete food composition database. A missing record means evidence has not been added and reviewed here; it does not mean a compound is absent from the food. Tissue/plant-part entries and protein identities are not filled unless a source supports them.
+This is a UI foundation, not a complete food composition database. A missing record means evidence has not been added and reviewed here; it does not mean a compound is absent from the food. Raw, uncooked foods are the first-version reference state; cooked or processed results are excluded from raw profiles. Tissue/plant-part entries and protein identities are not filled unless a source supports them.
 
 The contribution form downloads a JSON draft locally. It does not publish or accept records automatically. Every contribution needs human review before it joins the data.
 
@@ -36,6 +36,7 @@ For the hosted preview, the owner can set a repository Actions variable named `V
 - `src/App.tsx` — explorer interactions and page structure
 - `src/App.css`, `src/index.css` — visual system and responsive layout
 - `data/foods/usda-fdc-321360.json` — cited food and evidence records
+- `data/foods/usda-fdc-321360.research.md` — initial multi-source coverage, tissue leads, conflicts, and open gaps for the tomato profile
 - `data/evidence-record.schema.json` — versioned shape for accepted records
 - `data/contribution.schema.json` — portable contribution draft shape
 - `src/data/index.ts` — typed data import for the UI
@@ -43,10 +44,12 @@ For the hosted preview, the owner can set a repository Actions variable named `V
 - `THIRD-PARTY-NOTICES.md` — bundled dependency licenses and notices
 - `CONTRIBUTING.md` — evidence and review guidance
 - `AGENTS.md` — project-specific conventions for contributors and coding agents
+- `skills/whole-food-evidence-research/SKILL.md` — multi-source research workflow for each food species
+- `skills/whole-food-evidence-research/research-dossier-template.md` — source coverage, image, evidence, and gap ledger
 
 ## Evidence model
 
-Each finding should preserve food identity, tissue or plant part, detected/predicted status, measurement method, sample context, units, range when reported, citation, and source license. Derived values must keep their original value and a reproducible conversion. Reliability depends on the method and sample fit; a badge alone is not a substitute for provenance.
+Each finding should preserve food identity, tissue or plant part, detected/predicted status, measurement method, sample context, units, range when reported, citation, and source license. Each food dossier searches across all relevant reliable source families and records coverage, disagreements, and gaps. The first version catalogs raw, uncooked reference foods only. Derived values must keep their original value and a reproducible conversion. Reliability depends on the method and sample fit; a badge alone is not a substitute for provenance.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [DATA-LICENSE.md](DATA-LICENSE.md) before proposing data.
 

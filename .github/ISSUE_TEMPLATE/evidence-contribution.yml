@@ -5,13 +5,21 @@ body:
   - type: markdown
     attributes:
       value: |
-        Every proposal is reviewed before it enters the dataset. Keep the original source and its license attached. Do not add amounts unless the source supports the unit and food part.
+        Every proposal is reviewed before it enters the dataset. The first version covers raw, uncooked foods only. Keep the original source and its license attached. Do not add amounts unless the source supports the unit and food part. Search all relevant reliable source families and attach or link the food research dossier when adding a new profile.
   - type: input
     id: food
     attributes:
-      label: Food and preparation
-      description: Include species or cultivar/breed and raw/cooked/prepared state when known.
-      placeholder: "e.g. Solanum lycopersicum, grape tomato, raw"
+      label: Food species and form
+      description: Raw and uncooked only in this version. Include species, cultivar/breed, and precise raw form.
+      placeholder: "e.g. Solanum lycopersicum, grape tomato, ripe fresh fruit"
+    validations:
+      required: true
+  - type: input
+    id: raw_form
+    attributes:
+      label: Raw form details
+      description: Specify moisture, maturity, milling, shelling, or other details that affect sample matching.
+      placeholder: "e.g. dry uncooked rice grain; mature dry bean; raw chicken breast"
     validations:
       required: true
   - type: input
@@ -61,7 +69,12 @@ body:
     id: uncertainty
     attributes:
       label: Sample context and uncertainty
-      description: Cultivar/breed, location, preparation, storage, detection limit, and caveats help reviewers assess how far the finding applies.
+      description: Cultivar/breed, location, raw sample details, storage, detection limit, and caveats help reviewers assess how far the finding applies. Cooked and processed results cannot support a raw-profile amount.
+  - type: textarea
+    id: source_coverage
+    attributes:
+      label: Other sources searched
+      description: List relevant composition databases, primary studies, and omics repositories checked, including useful negative searches. A new-food profile should include the completed source-coverage dossier.
   - type: dropdown
     id: license
     attributes:
