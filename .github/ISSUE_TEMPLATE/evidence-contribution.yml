@@ -1,7 +1,6 @@
 name: Evidence contribution
 description: Propose a sourced food compound, protein, or tissue-specific finding
 title: "[Evidence] "
-labels: ["data contribution", "needs review"]
 body:
   - type: markdown
     attributes:

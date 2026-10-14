@@ -6,7 +6,7 @@ An open field guide to the compounds in whole foods. NutriFacts is designed for 
 
 ## Current preview
 
-This first UI preview includes one cited USDA Foundation Foods example: raw grape tomatoes (FoodData Central ID 321360). It shows a few reported measurements converted from per 100 g to per gram, expands methods and citations on demand, distinguishes food-level from tissue-level gaps, and provides an interactive PubChem structure panel for supported molecules.
+This first UI preview includes one cited USDA Foundation Foods example: raw grape tomatoes (FoodData Central ID 321360). It shows a few reported measurements converted from per 100 g to per gram, expands methods and citations on demand, distinguishes food-level from tissue-level gaps, and provides an interactive 2D/3D molecule panel where a PubChem conformer is available. The 3D viewer uses [3Dmol.js](https://3dmol.org/doc/) to render PubChem's SDF conformer data in the page.
 
 This is a UI foundation, not a complete food composition database. A missing record means evidence has not been added and reviewed here; it does not mean a compound is absent from the food. Tissue/plant-part entries and protein identities are not filled unless a source supports them.
 
@@ -38,6 +38,7 @@ Donation configuration is optional; no data or feature depends on it.
 - `data/contribution.schema.json` — portable contribution draft shape
 - `src/data/index.ts` — typed data import for the UI
 - `DATA-LICENSE.md` — licensing and third-party data rules
+- `THIRD-PARTY-NOTICES.md` — bundled dependency licenses and notices
 - `CONTRIBUTING.md` — evidence and review guidance
 - `AGENTS.md` — project-specific conventions for contributors and coding agents
 

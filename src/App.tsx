@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import type { GLViewer } from '3dmol'
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -63,6 +64,52 @@ function TomatoSpecimen() {
   )
 }
 
+function Molecule3DPreview({ cid, name }: { cid: number; name: string }) {
+  const mountRef = useRef<HTMLDivElement>(null)
+  const [status, setStatus] = useState<'loading' | 'interactive' | 'fallback'>('loading')
+
+  useEffect(() => {
+    let isMounted = true
+    let viewer: GLViewer | null = null
+    const mount = mountRef.current
+    const resizeObserver = mount ? new ResizeObserver(() => viewer?.resize()) : null
+    if (mount && resizeObserver) resizeObserver.observe(mount)
+
+    async function loadStructure() {
+      try {
+        const response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/SDF?record_type=3d`)
+        if (!response.ok) throw new Error('PubChem conformer unavailable')
+        const structure = await response.text()
+        const $3Dmol = await import('3dmol')
+        if (!isMounted || !mount) return
+        viewer = $3Dmol.createViewer(mount, { backgroundColor: '#fffefa', antialias: true })
+        viewer.addModel(structure, 'sdf')
+        viewer.setStyle({}, { sphere: { scale: 0.24 }, stick: { radius: 0.14 } })
+        viewer.zoomTo()
+        viewer.render()
+        viewer.resize()
+        setStatus('interactive')
+      } catch {
+        if (isMounted) setStatus('fallback')
+      }
+    }
+
+    void loadStructure()
+    return () => {
+      isMounted = false
+      resizeObserver?.disconnect()
+      viewer?.clear()
+    }
+  }, [cid])
+
+  return <>
+    <div className="molecule-3d-mount" ref={mountRef} role="img" aria-label={`Interactive three-dimensional conformer of ${name}. Drag the viewer to rotate it.`} />
+    {status === 'loading' && <div className="viewer-unavailable"><FlaskConical size={17} /><span>Loading PubChem 3D conformer…</span></div>}
+    {status === 'fallback' && <img className="molecule-3d-fallback" src={`https://pubchem.ncbi.nlm.nih.gov/image/img3d.cgi?cid=${cid}`} alt={`${name} static three-dimensional conformer from PubChem`} />}
+    {status === 'interactive' && <span className="canvas-corner">3D · DRAG TO ROTATE</span>}
+  </>
+}
+
 function App() {
   const [search, setSearch] = useState('')
   const [searchMode, setSearchMode] = useState<'Food' | 'Compound'>('Food')
@@ -76,7 +123,6 @@ function App() {
   const [searchFocused, setSearchFocused] = useState(false)
   const [suggestedFood, setSuggestedFood] = useState<string>(tomatoFood.name)
   const [suggestedCompound, setSuggestedCompound] = useState('')
-  const [viewerLoaded, setViewerLoaded] = useState(false)
   const [hasAmount, setHasAmount] = useState(false)
 
   useEffect(() => {
@@ -166,7 +212,10 @@ function App() {
   }
 
   const selectedItem = evidence.find((item) => item.id === activeCompound) ?? evidence[0]
-  const donationUrl = import.meta.env.VITE_DONATION_URL as string | undefined
+  const configuredRepositoryUrl = import.meta.env.VITE_REPOSITORY_URL as string | undefined
+  const repositoryUrl = configuredRepositoryUrl?.trim() || 'https://github.com/sublinex/nutrifacts'
+  const contributionIssueUrl = `${repositoryUrl}/issues/new?template=evidence-contribution.yml`
+  const donationUrl = (import.meta.env.VITE_DONATION_URL as string | undefined)?.trim()
 
   return (
     <div className="app-shell">
@@ -249,11 +298,10 @@ function App() {
               <div className="molecule-panel-head"><div><span className="section-kicker">MOLECULE VIEWER</span><strong>{selectedItem.name}</strong></div><span className="viewer-index">MOL · 00{evidence.findIndex((item) => item.id === selectedItem.id) + 1}</span></div>
               <div className={`molecule-canvas ${moleculeMode === '3D' ? 'canvas-3d' : ''}`}>
                 {moleculeMode === '2D' && selectedItem.pubchem_cid !== null ? <img className="structure-image" src={`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${selectedItem.pubchem_cid}/PNG?record_type=2d`} alt={`${selectedItem.name} two-dimensional chemical structure from PubChem`} onError={(event) => { event.currentTarget.style.display = 'none'; const sibling = event.currentTarget.nextElementSibling as HTMLElement | null; if (sibling) sibling.style.display = 'grid' }} /> : null}
-                {moleculeMode === '3D' ? <iframe className="pubchem-viewer" title={`${selectedItem.name} 3D conformer from PubChem`} src={`https://pubchem.ncbi.nlm.nih.gov/compound/${selectedItem.pubchem_cid}#section=3D-Conformer&embed=true&hide_title=true`} loading="lazy" onLoad={() => setViewerLoaded(true)} /> : <div className="structure-fallback" style={{ display: selectedItem.kind === 'food_fraction' ? 'grid' : undefined }}><div className="fallback-molecule"><span>{selectedItem.formula ? formatFormula(selectedItem.formula) : 'fraction'}</span><span className="fallback-rule" /><span>{selectedItem.name}</span></div><span>{selectedItem.kind === 'food_fraction' ? 'FOOD FRACTION · NOT ONE MOLECULE' : '2D STRUCTURE PREVIEW'}</span></div>}
-                {moleculeMode === '3D' && !viewerLoaded && <div className="viewer-unavailable"><FlaskConical size={17} /><span>Loading PubChem 3D conformer…</span></div>}
+                {moleculeMode === '3D' ? <Molecule3DPreview cid={selectedItem.pubchem_cid!} name={selectedItem.name} /> : <div className="structure-fallback" style={{ display: selectedItem.kind === 'food_fraction' ? 'grid' : undefined }}><div className="fallback-molecule"><span>{selectedItem.formula ? formatFormula(selectedItem.formula) : 'fraction'}</span><span className="fallback-rule" /><span>{selectedItem.name}</span></div><span>{selectedItem.kind === 'food_fraction' ? 'FOOD FRACTION · NOT ONE MOLECULE' : '2D STRUCTURE PREVIEW'}</span></div>}
                 {moleculeMode === '2D' && <span className="canvas-corner">2D / PUBCHEM</span>}
               </div>
-              <div className="viewer-tools">{selectedItem.kind === 'food_fraction' ? <span className="fraction-label">FOOD FRACTION</span> : <div className="molecule-switch" role="group" aria-label="Molecule view mode"><button className={moleculeMode === '2D' ? 'switch-active' : ''} onClick={() => setMoleculeMode('2D')}>2D</button>{selectedItem.pubchem_3d_conformer_available ? <button className={moleculeMode === '3D' ? 'switch-active' : ''} onClick={() => { setViewerLoaded(false); setMoleculeMode('3D') }}>3D <Sparkles size={11} /></button> : <button className="switch-disabled" disabled title="PubChem has no generated 3D conformer for this flexible compound.">3D <CircleHelp size={10} /></button>}</div>}{selectedItem.pubchem_cid !== null && <a href={`https://pubchem.ncbi.nlm.nih.gov/compound/${selectedItem.pubchem_cid}`} target="_blank" rel="noreferrer">Open in PubChem <ExternalLink size={12} /></a>}</div>
+              <div className="viewer-tools">{selectedItem.kind === 'food_fraction' ? <span className="fraction-label">FOOD FRACTION</span> : <div className="molecule-switch" role="group" aria-label="Molecule view mode"><button className={moleculeMode === '2D' ? 'switch-active' : ''} onClick={() => setMoleculeMode('2D')}>2D</button>{selectedItem.pubchem_3d_conformer_available ? <button className={moleculeMode === '3D' ? 'switch-active' : ''} onClick={() => setMoleculeMode('3D')}>3D <Sparkles size={11} /></button> : <button className="switch-disabled" disabled title="PubChem has no generated 3D conformer for this flexible compound.">3D <CircleHelp size={10} /></button>}</div>}{selectedItem.pubchem_cid !== null && <a href={`https://pubchem.ncbi.nlm.nih.gov/compound/${selectedItem.pubchem_cid}`} target="_blank" rel="noreferrer">Open in PubChem <ExternalLink size={12} /></a>}</div>
               <div className="molecule-meta"><span>FORMULA</span><strong>{selectedItem.formula ? formatFormula(selectedItem.formula) : '—'}</strong><span>STRUCTURE SOURCE</span><a href="https://pubchem.ncbi.nlm.nih.gov/docs/structures" target="_blank" rel="noreferrer">PubChem PUG REST <ExternalLink size={11} /></a></div>
               <div className="viewer-disclaimer"><CircleHelp size={14} /><span>{selectedItem.kind === 'food_fraction' ? 'Dietary fiber is a food fraction, not one molecule with a single chemical structure.' : selectedItem.pubchem_3d_conformer_available ? 'The PubChem conformer is a computed molecule view; it does not show the molecule inside food tissue.' : 'PubChem lists a 2D lycopene structure but no generated 3D conformer for this flexible molecule.'}</span></div>
             </aside>
@@ -273,7 +321,7 @@ function App() {
         <section className="about-strip" id="about"><div className="about-icon"><ShieldCheck size={20} /></div><div><strong>Open code. Open data. No paywall.</strong><p>App code is MIT licensed. Curated contributions are proposed under CC BY 4.0, with source terms recorded per entry. USDA FoodData Central is public domain.</p></div><a href="https://fdc.nal.usda.gov/api-guide/" target="_blank" rel="noreferrer">Data and attribution policy <ArrowUpRight size={13} /></a></section>
       </main>
 
-      <footer className="site-footer" id="support"><a className="wordmark footer-wordmark" href="#top"><span className="wordmark-icon"><Leaf size={16} /></span><span>nutri<span>facts</span></span><sup>OPEN</sup></a><p>Good questions grow from good evidence.</p><div className="footer-links"><a href="https://github.com" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a><a href="#research">Contribute <ArrowUpRight size={12} /></a>{donationUrl ? <a href={donationUrl} target="_blank" rel="noreferrer"><Heart size={12} /> Optional donations <ArrowUpRight size={12} /></a> : <span className="donation-hint"><Heart size={12} /> Optional donations can be enabled by project owner</span>}</div><small>Free for everyone · Made to be shared</small></footer>
+      <footer className="site-footer" id="support"><a className="wordmark footer-wordmark" href="#top"><span className="wordmark-icon"><Leaf size={16} /></span><span>nutri<span>facts</span></span><sup>OPEN</sup></a><p>Good questions grow from good evidence.</p><div className="footer-links"><a href={repositoryUrl} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a><a href={contributionIssueUrl} target="_blank" rel="noreferrer">Contribute <ArrowUpRight size={12} /></a>{donationUrl ? <a href={donationUrl} target="_blank" rel="noreferrer"><Heart size={12} /> Optional donations <ArrowUpRight size={12} /></a> : <a href={repositoryUrl} target="_blank" rel="noreferrer"><Heart size={12} /> Optional support on GitHub <ArrowUpRight size={12} /></a>}</div><small>Free for everyone · Made to be shared</small></footer>
 
       {isContributionOpen && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsContributionOpen(false) }}>
         <section className="contribution-modal" role="dialog" aria-modal="true" aria-labelledby="contribution-title">
@@ -291,7 +339,7 @@ function App() {
             <label>Note for reviewers<textarea name="note" rows={2} placeholder="Context, uncertainty, or what should be checked" /></label>
             <label className="license-check"><input name="licenseAgreement" type="checkbox" required /><span>I have the right to share this contribution under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>, and I’ve included its source.</span></label>
             <div className="modal-footer"><span><ShieldCheck size={14} /> Drafts need human review</span><button type="submit" className="primary-action">Download draft <ArrowDownRight size={15} /></button></div>
-            {draftSaved && <div className="draft-success" role="status"><Check size={15} /> Draft downloaded. It’s ready to attach to a future GitHub contribution.</div>}
+            {draftSaved && <div className="draft-success" role="status"><Check size={15} /> Draft downloaded. <a href={contributionIssueUrl} target="_blank" rel="noreferrer">Open a GitHub evidence issue <ExternalLink size={12} /></a> and attach it.</div>}
           </form>
         </section>
       </div>}
