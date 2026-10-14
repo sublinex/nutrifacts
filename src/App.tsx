@@ -30,6 +30,7 @@ const formatNumber = (value: number) => new Intl.NumberFormat('en-US', { maximum
 const formatRange = ({ min, max }: { min: number; max: number }) => `${formatNumber(min)}–${formatNumber(max)}`
 const formatFormula = (formula: string) => formula.replace(/[0-9]/g, (digit) => '₀₁₂₃₄₅₆₇₈₉'[Number(digit)])
 const capitalize = (value: string) => `${value.charAt(0).toUpperCase()}${value.slice(1)}`
+const publicAssetUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
 
 function Molecule3DPreview({ cid, name }: { cid: number; name: string }) {
   const mountRef = useRef<HTMLDivElement>(null)
@@ -219,14 +220,14 @@ function App() {
                 <kbd>↵</kbd>
               </label>
               {showSearchResults && <div className="search-popover" role="listbox" aria-label="Search results">
-                {hasFoodMatch ? <button className="search-result" onMouseDown={() => selectSearchSuggestion(searchMode === 'Compound' ? search : tomatoFood.name)}><span className="result-thumb"><img src={tomatoFood.image.path} alt="" /></span><span><strong>{searchMode === 'Compound' ? search : tomatoFood.name}</strong><small>{searchMode === 'Compound' ? 'Compound in this food profile' : `${tomatoFood.scientific_name} · ${tomatoFood.preparation}`}</small></span><ChevronRight size={16} /></button> : <div className="search-empty"><strong>No cited {searchMode.toLowerCase()} entry yet</strong><span>Help add a source for “{search}”.</span><button onMouseDown={(event) => { event.preventDefault(); setSearchFocused(false); openContribution(searchMode === 'Food' ? search : tomatoFood.name) }}>Suggest an entry <ArrowUpRight size={13} /></button></div>}
+                {hasFoodMatch ? <button className="search-result" onMouseDown={() => selectSearchSuggestion(searchMode === 'Compound' ? search : tomatoFood.name)}><span className="result-thumb"><img src={publicAssetUrl(tomatoFood.image.path)} alt="" /></span><span><strong>{searchMode === 'Compound' ? search : tomatoFood.name}</strong><small>{searchMode === 'Compound' ? 'Compound in this food profile' : `${tomatoFood.scientific_name} · ${tomatoFood.preparation}`}</small></span><ChevronRight size={16} /></button> : <div className="search-empty"><strong>No cited {searchMode.toLowerCase()} entry yet</strong><span>Help add a source for “{search}”.</span><button onMouseDown={(event) => { event.preventDefault(); setSearchFocused(false); openContribution(searchMode === 'Food' ? search : tomatoFood.name) }}>Suggest an entry <ArrowUpRight size={13} /></button></div>}
               </div>}
             </div>
             <div className="intro-footnote"><ShieldCheck size={15} /> Amounts appear only where a cited measurement supports them.</div>
           </div>
           <figure className="intro-art">
             <div className="art-index">SPECIMEN 001 <span>·</span> FRUIT</div>
-            <img className="food-photo" src={tomatoFood.image.path} alt={tomatoFood.image.alt} />
+            <img className="food-photo" src={publicAssetUrl(tomatoFood.image.path)} alt={tomatoFood.image.alt} />
             <figcaption className="art-caption"><span>RAW · WHOLE</span><span><i>{tomatoFood.scientific_name}</i></span><span className="image-credit">Photo <a href={tomatoFood.image.source_url} target="_blank" rel="noreferrer">{tomatoFood.image.creator}</a> · <a href={tomatoFood.image.license_url} target="_blank" rel="noreferrer">{tomatoFood.image.license}</a></span></figcaption>
           </figure>
         </section>
